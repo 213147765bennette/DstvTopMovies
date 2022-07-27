@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey"
+    android:id="@+id/main_listview_layout"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/mainLayout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/grey"
+        app:layout_constraintTop_toTopOf="@+id/main_listview_layout"
+        app:layout_constraintLeft_toLeftOf='parent'
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingTop="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/main_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            app:cardCornerRadius="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.18"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="start"
+                    android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/movieImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/dstv" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/foraddresses"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.5"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/movieTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_gravity="start"
+                        android:text="Local Special"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/movieDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="start"
+                        android:text="Dstv Action Movie"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/movieReleaseDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="1dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Release Date 1984"
+                        android:textColor="@color/black"
+                        android:textSize="13dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginEnd="80dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_item_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+     <!--   <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey_2"
+            android:layout_gravity="start"
+            android:layout_marginStart="5dp"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp">
+
+            <LinearLayout
+                android:id="@+id/menu_layout_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+
+                >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:background="@color/grey_2"
+                    android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:id="@+id/movieImage"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/dstv"
+                            />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:layout_marginStart="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/movieTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Rambo"
+                            android:textAllCaps="false"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/black"
+                            android:textStyle="normal"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/movieDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="1dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Dstv Action Movie"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:id="@+id/movieReleaseDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="1dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Release Date 1984"
+                            android:textSize="13dp" />
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtDistance"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="80dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Add Love"
+                            android:textColor="@color/black"
+                            android:textSize="15sp" />
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>-->
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
