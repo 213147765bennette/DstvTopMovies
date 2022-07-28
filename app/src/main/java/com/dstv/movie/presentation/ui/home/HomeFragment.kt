@@ -69,7 +69,6 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
         }
 
 
-
         viewModel= (activity as MainActivity).viewModel
         //movieItemAdapter = (activity as MainActivity).moviesAdapter
         movieItemAdapter = MovieItemAdapter(this)

@@ -10,10 +10,24 @@
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/myToolbar"
+        android:layout_height="60dp"
+        android:textAlignment="textEnd"
+        app:titleTextAppearance="@color/black"
+        android:background="@color/grey_3"
+        android:id="@+id/myToolbar">
 
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/top_5_movies"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:id="@+id/toolbar_title" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
 
     <androidx.recyclerview.widget.RecyclerView

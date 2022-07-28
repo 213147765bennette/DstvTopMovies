@@ -26,6 +26,7 @@
     <string name="dialog_success_msg">Your data was saved successfully</string>
     <string name="dialog_delete_msg">Are you sure do you want to delete?</string>
     <string name="favourites">Favourites</string>
+    <string name="top_5_movies">Top 5 Movies</string>
 
 
 </resources>
