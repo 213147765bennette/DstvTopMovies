@@ -2,7 +2,7 @@
     <string name="app_name">DstvMovies</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Favourites</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Release Date</string>
 
     <string name="dialog_add">Favourite Movie</string>
     <string name="btn_add">Add</string>
@@ -27,6 +27,7 @@
     <string name="dialog_delete_msg">Are you sure do you want to delete?</string>
     <string name="favourites">Favourites</string>
     <string name="top_5_movies">Top 5 Movies</string>
+    <string name="favourites_text">Favourites</string>
 
 
 </resources>

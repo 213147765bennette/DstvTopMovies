@@ -28,4 +28,4 @@ data class Item(
     val type: String,
     @ColumnInfo(name = "valueToOrderBy")
     val valueToOrderBy: String
-)
+):Serializable

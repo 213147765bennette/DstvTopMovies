@@ -13,13 +13,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dstv.movie.data.entity.FavouriteMovieEntity
-import com.dstv.movie.data.model.Component
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.databinding.MovieListviewBinding
-import com.google.android.material.imageview.ShapeableImageView
-import dagger.Provides
-import javax.inject.Inject
 
 class MovieItemAdapter(var clickListner: RecycleViewItemClickInterface)
     :RecyclerView.Adapter<MovieItemAdapter.MoviesViewHolder>() {

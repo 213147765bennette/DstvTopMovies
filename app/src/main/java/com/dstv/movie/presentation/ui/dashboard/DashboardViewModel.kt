@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ClipData
 import android.util.Log
 import androidx.lifecycle.*
+import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.domain.repository.local.MovieItemsLocalDataRepository
 import com.dstv.movie.domain.repository.remote.MovieItemsDataRepository
@@ -22,8 +23,8 @@ class DashboardViewModel(
     }
 
 
-    private lateinit var favouretsItems: List<Item>
-    var favouriteMovieData = MutableLiveData<List<Item>>()
+    private lateinit var favouretsItems: List<UserFavouriteMovieEntity>
+    var favouriteMovieData = MutableLiveData<List<UserFavouriteMovieEntity>>()
     var loading = MutableLiveData<Boolean>()
     var isFavouriteMovieAvailable = MutableLiveData<Boolean>()
     var errorMessage = MutableLiveData<String>()
@@ -37,17 +38,17 @@ class DashboardViewModel(
 
 
 
-    fun getFavouritesMovies(): LiveData<List<Item>> {
+    fun getFavouritesMovies(): LiveData<List<UserFavouriteMovieEntity>> {
         Log.d(TAG,"========GETTING FAVOURITES MOVIES===========")
 
         viewModelScope.launch {
-            favouretsItems =  movieItemsLocalDataRepository.getAllMovies()
-               // withContext(Dispatchers.Default) { movieItemsLocalDataRepository.getAllMovies() }
+            favouretsItems =
+                withContext(Dispatchers.Default) { movieItemsLocalDataRepository.getAllMovies() }
             Log.d(TAG,"=======Getting data from Local DB ============: ${Gson().toJson(favouretsItems)}")
 
             if(favouretsItems.isNotEmpty()){
                 favouriteMovieData.value = favouretsItems
-                Log.d(TAG,"=======Getting data from Local DB ============: ${Gson().toJson(favouriteMovieData)}")
+                Log.d(TAG,"=======Getting data from Local DB ============: ${Gson().toJson(favouriteMovieData.value)}")
             }
 
         }

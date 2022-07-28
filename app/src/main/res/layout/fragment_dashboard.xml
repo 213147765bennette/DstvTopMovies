@@ -7,19 +7,61 @@
     android:id="@+id/main_favourites_layout"
     tools:context=".presentation.ui.dashboard.DashboardFragment">
 
-
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/favourites_recycler_view"
-        />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:id="@+id/toolbar_layout"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAlignment="textEnd"
+            app:titleTextAppearance="@color/black"
+            android:background="@color/grey_4"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/myToolbar">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+        android:orientation="vertical"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="10sp"
+        android:layout_marginTop="5sp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favourites_text"
+            android:textColor="@color/black"
+            android:layout_marginBottom="10sp"
+            android:textStyle="normal"
+            android:textSize="15sp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favourites_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@id/main_favourites_layout"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_layout"
         android:orientation="vertical"
-
         >
 
         <ProgressBar

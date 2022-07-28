@@ -3,6 +3,7 @@ package com.dstv.movie.data.repository.local
 import android.util.Log
 import com.dstv.movie.data.datasource.local.movies.MovieItemLocalDataSource
 import com.dstv.movie.data.datasource.local.movies.MovieItemLocalDataSourceImpl
+import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.domain.repository.local.MovieItemsLocalDataRepository
 import io.reactivex.rxjava3.core.Observable
@@ -19,11 +20,11 @@ class MovieItemLocalRepositoryImpl(
         private var TAG = "MovieItemLocalRepositoryImpl"
     }
 
-    override fun insertMovieItem(favouriteMovieItem: Item) {
+    override fun insertMovieItem(favouriteMovieItem: UserFavouriteMovieEntity) {
         itemLocalDataSource.insertMovieItem(favouriteMovieItem)
     }
 
-    override suspend fun deleteMovie(favouriteMovieItem: Item) {
+    override suspend fun deleteMovie(favouriteMovieItem: UserFavouriteMovieEntity) {
         return itemLocalDataSource.deleteMovie(favouriteMovieItem)
     }
 
@@ -32,12 +33,12 @@ class MovieItemLocalRepositoryImpl(
         return itemLocalDataSource.deleteAll()
     }
 
-    override suspend fun getAllMovies(): List<Item> {
+    override suspend fun getAllMovies(): List<UserFavouriteMovieEntity> {
         Log.d(TAG,"GET_ALL_MOVIE_ITEM_SAVED FROM REPO: ***********")
         return itemLocalDataSource.getAllMovies()
     }
 
-    override suspend fun updateMovieItem(favouriteMovieEntity: Item) {
+    override suspend fun updateMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity) {
         return itemLocalDataSource.updateMovieItem(favouriteMovieEntity)
     }
 

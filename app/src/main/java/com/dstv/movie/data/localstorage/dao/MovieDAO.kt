@@ -1,7 +1,7 @@
 package com.dstv.movie.data.localstorage.dao
 
 import androidx.room.*
-import com.dstv.movie.data.entity.FavouriteMovieEntity
+import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -13,25 +13,25 @@ import io.reactivex.rxjava3.core.Single
 interface MovieDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertMovieItem(favouriteMovieEntity: Item)
+    suspend fun insertMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity)
 
     @Delete
-    fun deleteMovieItem(favouriteMovieEntity: Item): Single<Int>
+    fun deleteMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity): Single<Int>
 
-    @Query("DELETE FROM movies")
+    @Query("DELETE FROM favourites")
     suspend fun deleteAll(): Int
 
     @Delete
-    suspend fun deleteMovie(favouriteMovieEntity: Item)
+    suspend fun deleteMovie(favouriteMovieEntity: UserFavouriteMovieEntity)
 
-    @Query("SELECT * from movies ORDER BY id DESC")
-    fun getAllMovies(): Observable<List<Item>>
+    @Query("SELECT * from favourites ORDER BY id DESC")
+    fun getAllMovies(): Observable<List<UserFavouriteMovieEntity>>
 
 
-    @Query("SELECT * FROM movies")
-    suspend fun getMovieItems(): List<Item>
+    @Query("SELECT * FROM favourites")
+    suspend fun getMovieItems(): List<UserFavouriteMovieEntity>
 
     @Update
-    suspend fun updateMovieItem(favouriteMovieEntity: Item)
+    suspend fun updateMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity)
 
 }

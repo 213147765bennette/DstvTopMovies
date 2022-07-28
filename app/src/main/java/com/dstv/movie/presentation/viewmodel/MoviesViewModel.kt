@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
+import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.data.model.MovieAPIResponse
 import com.dstv.movie.data.util.Resource
@@ -84,12 +85,25 @@ class MoviesViewModel(
     //local Storage
     fun saveMovieItem(movieItem: Item) = viewModelScope.launch {
         Log.d(TAG,"MOVIE_ITEM_SAVED: ${movieItem.title}")
-        movieItemsLocalDataRepository.insertMovieItem(movieItem)
+        val favouriteEntity = UserFavouriteMovieEntity(0,0,"","",)
+        favouriteEntity.id = movieItem.id
+        favouriteEntity.releaseDate = movieItem.releaseDate
+        favouriteEntity.synopsis = movieItem.synopsis
+        favouriteEntity.title = movieItem.title
+
+        Log.d(TAG,"MOVIE_ENTITY: ${favouriteEntity.title}")
+        movieItemsLocalDataRepository.insertMovieItem(favouriteEntity)
     }
 
 
     fun deleteMovieItem(movieItem: Item) = viewModelScope.launch {
-        movieItemsLocalDataRepository.deleteMovie(movieItem)
+        val favouriteEntity = UserFavouriteMovieEntity(0,0,"","",)
+        favouriteEntity.id = movieItem.id
+        favouriteEntity.releaseDate = movieItem.releaseDate
+        favouriteEntity.synopsis = movieItem.synopsis
+        favouriteEntity.title = movieItem.title
+
+        movieItemsLocalDataRepository.deleteMovie(favouriteEntity)
     }
 
     //this is when i want to use Reactive java

@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dstv.movie.R
+import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import com.google.gson.Gson
 
 /**
  * created by {Bennette Molepo} on {10/23/2021}.
  */
-class FaouriteMoviesAdapter(var favouritesItems: List<Item>):RecyclerView.Adapter<FaouriteMoviesAdapter.FavouriteViewHolder>(){
+class FaouriteMoviesAdapter(var favouritesItems: List<UserFavouriteMovieEntity>):RecyclerView.Adapter<FaouriteMoviesAdapter.FavouriteViewHolder>(){
 
     companion object{
         private val TAG = "FaouriteMoviesAdapter"
@@ -29,18 +30,18 @@ class FaouriteMoviesAdapter(var favouritesItems: List<Item>):RecyclerView.Adapte
     }
 
     //update my recleryview using diffutil
-    private val diffUtil=object : DiffUtil.ItemCallback<Item>(){
+    private val diffUtil=object : DiffUtil.ItemCallback<UserFavouriteMovieEntity>(){
         override fun areItemsTheSame(
-            oldItem: Item,
-            newItem: Item
+            oldItem: UserFavouriteMovieEntity,
+            newItem: UserFavouriteMovieEntity
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: Item,
-            newItem: Item
+            oldItem: UserFavouriteMovieEntity,
+            newItem: UserFavouriteMovieEntity
         ): Boolean {
             return oldItem == newItem
         }
@@ -48,7 +49,7 @@ class FaouriteMoviesAdapter(var favouritesItems: List<Item>):RecyclerView.Adapte
 
     private val asyncListDiffer = AsyncListDiffer(this,diffUtil)
 
-    fun setList(favouriteList: List<Item>){
+    fun setList(favouriteList: List<UserFavouriteMovieEntity>){
         Log.d(TAG,"List Values: ${Gson().toJson(favouriteList)} ")
         asyncListDiffer.submitList(favouriteList)
     }
@@ -67,7 +68,7 @@ class FaouriteMoviesAdapter(var favouritesItems: List<Item>):RecyclerView.Adapte
         private val txtItemDescription = itemView.findViewById<TextView>(R.id.txt_movie_description)
 
         @SuppressLint("SetTextI18n")
-        fun bind(data: Item, position: Int){
+        fun bind(data: UserFavouriteMovieEntity, position: Int){
             Log.d(TAG,"Binding data $data")
 
             txtItemTitle.text = data.title

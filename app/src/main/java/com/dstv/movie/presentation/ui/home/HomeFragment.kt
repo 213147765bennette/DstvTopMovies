@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.dstv.movie.MainActivity
 import com.dstv.movie.R
+import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.data.util.Resource
 import com.dstv.movie.databinding.FragmentHomeBinding
@@ -55,7 +56,6 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
         _binding = FragmentHomeBinding.bind(view)
         _binding?.myToolbar?.inflateMenu(R.menu.main)
         _binding?.myToolbar?.setOnMenuItemClickListener {
@@ -129,17 +129,20 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
 
         dialog.positiveButton(R.string.btn_add) {
             //Add the Movie Item record to RoomDB
-            //viewModel.saveMovieItem(data)
-            lifecycleScope.launch {
+            viewModel.saveMovieItem(data)
+            isMovieAdded.value = true
+            isMovieDeleted.value = false
+            Toast.makeText(requireContext(),"Your data was saved successful", Toast.LENGTH_LONG).show()
+
+            /*lifecycleScope.launch {
                 Log.d(TAG, "========= ADDING TO ROOM DB==========: ${data.synopsis}")
-                movieItemsLocalDataRepository.insertMovieItem(data)
+                movieItemsLocalDataRepository.insertMovieItem(favouriteEntity)
 
                 isMovieAdded.value = true
                 isMovieDeleted.value = false
                 Toast.makeText(requireContext(),"Your data was saved successful", Toast.LENGTH_LONG).show()
 
-            }
-
+            }*/
 
         }
 

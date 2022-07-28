@@ -21,7 +21,7 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideMovieDatabase(app: Application): DatabaseService {
-        return Room.databaseBuilder(app, DatabaseService::class.java,"movies_db")
+        return Room.databaseBuilder(app, DatabaseService::class.java,"dstv_movies")
             .fallbackToDestructiveMigration()
             .build()
 

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dstv.movie.R
+import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.databinding.FragmentDashboardBinding
 import com.dstv.movie.presentation.adapter.FaouriteMoviesAdapter
@@ -36,7 +37,7 @@ class DashboardFragment : Fragment() {
     lateinit var factory: DashboardViewModelFactory
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var itemAdapter: FaouriteMoviesAdapter
-    private lateinit var itemList: List<Item>
+    private lateinit var itemList: List<UserFavouriteMovieEntity>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,9 +48,6 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
             ViewModelProvider(this, factory)[DashboardViewModel::class.java]
 
-        setHasOptionsMenu(true)
-
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -58,14 +56,13 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        /*_binding!!.myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        _binding!!.myToolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
         _binding!!.myToolbar.setNavigationOnClickListener { view ->
-
-            Navigation.findNavController(view).navigate(R.id.navigation_home);
-
-        }*/
+            Navigation.findNavController(
+                view
+            ).navigate(R.id.navigation_home);
+        }
         init()
 
     }
@@ -74,9 +71,7 @@ class DashboardFragment : Fragment() {
 
         itemList = ArrayList()
         itemAdapter = FaouriteMoviesAdapter(itemList)
-        val linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        _binding?.favouritesRecyclerView?.layoutManager = linearLayoutManager
+
         _binding?.favouritesRecyclerView?.adapter = itemAdapter
 
         dashboardViewModel.getFavouritesMovies().observe(viewLifecycleOwner) {
@@ -89,7 +84,9 @@ class DashboardFragment : Fragment() {
 
                 //inflating the adapter
                 _binding?.favouritesRecyclerView?.apply {
-                    layoutManager = linearLayoutManager
+
+                    layoutManager = LinearLayoutManager(activity)
+
                     adapter = itemAdapter
 
                 }
