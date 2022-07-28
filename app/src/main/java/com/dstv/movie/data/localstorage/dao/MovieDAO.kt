@@ -2,6 +2,7 @@ package com.dstv.movie.data.localstorage.dao
 
 import androidx.room.*
 import com.dstv.movie.data.entity.FavouriteMovieEntity
+import com.dstv.movie.data.model.Item
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
@@ -12,21 +13,21 @@ import io.reactivex.rxjava3.core.Single
 interface MovieDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertMovieItem(favouriteMovieEntity: FavouriteMovieEntity)
+    suspend fun insertMovieItem(favouriteMovieEntity: Item)
 
     @Delete
-    fun deleteMovieItem(favouriteMovieEntity: FavouriteMovieEntity): Single<Int>
+    fun deleteMovieItem(favouriteMovieEntity: Item): Single<Int>
 
     @Query("DELETE FROM movie")
     suspend fun deleteAll(): Int
 
     @Query("SELECT * from movie ORDER BY id DESC")
-    fun getAllMovies(): Observable<List<FavouriteMovieEntity>>
+    fun getAllMovies(): Observable<List<Item>>
 
     @Query("SELECT * FROM movie")
-    suspend fun getMovieItems(): List<FavouriteMovieEntity>
+    suspend fun getMovieItems(): List<Item>
 
     @Update
-    suspend fun updateMovieItem(favouriteMovieEntity: FavouriteMovieEntity)
+    suspend fun updateMovieItem(favouriteMovieEntity: Item)
 
 }

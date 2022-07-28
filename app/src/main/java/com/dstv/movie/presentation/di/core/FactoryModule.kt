@@ -1,6 +1,7 @@
 package com.dstv.movie.presentation.di.core
 
 import android.app.Application
+import com.dstv.movie.domain.repository.local.MovieItemsLocalDataRepository
 import com.dstv.movie.domain.repository.remote.MovieItemsDataRepository
 import com.dstv.movie.presentation.viewmodel.MoviesViewModelFactory
 import dagger.Module
@@ -17,11 +18,13 @@ class FactoryModule {
     @Provides
   fun provideMoviesViewModelFactory(
      application: Application,
-     movieItemsDataRepository: MovieItemsDataRepository
+     movieItemsDataRepository: MovieItemsDataRepository,
+     movieItemsLocalDataRepository: MovieItemsLocalDataRepository
     ):MoviesViewModelFactory{
       return MoviesViewModelFactory(
           application,
-          movieItemsDataRepository
+          movieItemsDataRepository,
+          movieItemsLocalDataRepository
       )
   }
 

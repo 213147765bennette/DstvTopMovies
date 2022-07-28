@@ -3,4 +3,27 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="dialog_add">Favourite Movie</string>
+    <string name="dialog_add_title">Add this movie to your favourites?</string>
+    <string name="dialog_message">Adding movie data to your favourites list.</string>
+    <string name="dialog_add_message">You data was added successfully to favorites.</string>
+
+
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_delete_title">Delete Favorites</string>
+    <string name="dialog_success_title">Great</string>
+    <string name="dialog_deleted_title">Oops!</string>
+
+    <string name="empty_list">Oops Sorry!</string>
+    <string name="empty_list_msg">Sorry no favorites added as yet!</string>
+
+    <string name="dialog_error_title">Error!</string>
+    <string name="dialog_error_msg">An error occurred please try again!</string>
+
+    <string name="dialog_deleted_msg">Your data was deleted successfully</string>
+    <string name="dialog_success_msg">Your data was saved successfully</string>
+    <string name="dialog_delete_msg">Are you sure do you want to delete?</string>
+
+
 </resources>

@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     @Inject
     lateinit var factory: MoviesViewModelFactory
-    @Inject
-    lateinit var moviesAdapter: MovieItemAdapter
     lateinit var viewModel: MoviesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             navController
         )
         viewModel = ViewModelProvider(this,factory)[MoviesViewModel::class.java]
+
 
     }
 }

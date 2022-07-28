@@ -7,17 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
 import com.dstv.movie.MainActivity
 import com.dstv.movie.R
+import com.dstv.movie.data.model.Item
 import com.dstv.movie.data.util.Resource
 import com.dstv.movie.databinding.FragmentHomeBinding
 import com.dstv.movie.presentation.adapter.MovieItemAdapter
 import com.dstv.movie.presentation.viewmodel.MoviesViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface {
 
     companion object{
         private var TAG = "HomeFragment"
@@ -36,7 +39,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        movieItemAdapter = MovieItemAdapter(this)
+        return root;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +50,8 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.bind(view)
         viewModel= (activity as MainActivity).viewModel
-        movieItemAdapter = (activity as MainActivity).moviesAdapter
+        //movieItemAdapter = (activity as MainActivity).moviesAdapter
+        movieItemAdapter = MovieItemAdapter(this)
 
         initRecyclerView()
         viewMoviesList()
@@ -56,6 +63,8 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        //calling all my dialogs to be activated
+        observers()
     }
 
 
@@ -88,6 +97,60 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //in here observe live data from my model
+    private fun observers(){
+
+        viewModel.isDeleted.observe(viewLifecycleOwner, Observer {
+            if(it){
+                showDeleteDialog()
+            }
+        })
+
+    }
+
+    private fun showAddDialog(data: Item){
+
+        val dialog = MaterialDialog (requireContext())
+            .cornerRadius(8f)
+            .cancelable(false)
+            .title(R.string.dialog_add)
+            .message(R.string.dialog_add_title)
+
+
+        dialog.positiveButton(R.string.dialog_add) {
+            //Add the Movie Item record to RoomDB
+            viewModel.saveMovieItem(data)
+            Toast.makeText(requireContext(),"Your data was saved successful", Toast.LENGTH_LONG).show()
+            Log.d(TAG, "========= ADDING ==========: ${data.synopsis}")
+
+        }
+
+        dialog.negativeButton {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+    }
+
+    //show the deleted dialog
+    private fun showDeleteDialog(){
+
+        val dialog = MaterialDialog(requireContext())
+            .cornerRadius(8f)
+            .cancelable(false)
+            .title(R.string.dialog_deleted_title)
+            .message(R.string.dialog_deleted_msg)
+
+        dialog.positiveButton {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+    }
+
+
     private fun showProgressBar(){
         isLoading = true
         _binding?.progressBar?.visibility = View.VISIBLE
@@ -101,5 +164,9 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClicked(data: Item, position: Int) {
+        showAddDialog(data)
     }
 }

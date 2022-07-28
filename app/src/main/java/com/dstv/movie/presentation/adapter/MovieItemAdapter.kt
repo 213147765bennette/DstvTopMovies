@@ -13,11 +13,16 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dstv.movie.data.entity.FavouriteMovieEntity
 import com.dstv.movie.data.model.Component
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.databinding.MovieListviewBinding
+import com.google.android.material.imageview.ShapeableImageView
+import dagger.Provides
+import javax.inject.Inject
 
-class MovieItemAdapter:RecyclerView.Adapter<MovieItemAdapter.MoviesViewHolder>() {
+class MovieItemAdapter(var clickListner: RecycleViewItemClickInterface)
+    :RecyclerView.Adapter<MovieItemAdapter.MoviesViewHolder>() {
 
     companion object{
         private var TAG = "MovieItemAdapter"
@@ -46,7 +51,7 @@ class MovieItemAdapter:RecyclerView.Adapter<MovieItemAdapter.MoviesViewHolder>()
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = differ.currentList[position]
-        holder.bind(movie, position)
+        holder.bind(movie, position,clickListner)
     }
 
     override fun getItemCount(): Int {
@@ -56,10 +61,11 @@ class MovieItemAdapter:RecyclerView.Adapter<MovieItemAdapter.MoviesViewHolder>()
     inner class MoviesViewHolder(
         val binding:MovieListviewBinding):
         RecyclerView.ViewHolder(binding.root){
+
         @SuppressLint("SetTextI18n")
-        fun bind(movieItem: Item, position: Int){
+        fun bind(movieItem: Item, position: Int, action: RecycleViewItemClickInterface){
             Log.i(TAG,"came here ${movieItem.title}")
-            var count: Int = position.plus(1)
+            val count: Int = position.plus(1)
 
             binding.movieTitle.text = count.toString()+". "+movieItem.title
             binding.movieDescription.text = movieItem.synopsis
@@ -69,8 +75,20 @@ class MovieItemAdapter:RecyclerView.Adapter<MovieItemAdapter.MoviesViewHolder>()
             load(movieItem.imageUrl).
             into(binding.movieImage)
 
+            binding.fabFavourites.setOnClickListener {
+                Log.i(TAG,"Added This Movie to favorites: ${movieItem.title}")
+                action.onItemClicked(movieItem,absoluteAdapterPosition)
+            }
         }
+
+
+
     }
 
+    //this interface will help us to move to another activity
+    interface RecycleViewItemClickInterface{
+        //click function to start process
+        fun onItemClicked(data:Item, position:Int)
+    }
 
 }

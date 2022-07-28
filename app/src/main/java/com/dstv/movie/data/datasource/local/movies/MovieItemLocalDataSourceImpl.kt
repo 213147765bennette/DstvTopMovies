@@ -2,6 +2,7 @@ package com.dstv.movie.data.datasource.local.movies
 
 import com.dstv.movie.data.entity.FavouriteMovieEntity
 import com.dstv.movie.data.localstorage.dao.MovieDAO
+import com.dstv.movie.data.model.Item
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.CoroutineScope
@@ -15,14 +16,14 @@ class MovieItemLocalDataSourceImpl(
     private val movieDAO: MovieDAO
     ): MovieItemLocalDataSource {
 
-    override fun insertMovieItem(favouriteMovieEntity: FavouriteMovieEntity) {
+    override fun insertMovieItem(favouriteMovieEntity: Item) {
         //To run this in a background worker thread am using :Dispatchers.IO
         CoroutineScope(Dispatchers.IO).launch {
             movieDAO.insertMovieItem(favouriteMovieEntity)
         }
     }
 
-    override fun deleteMovieItem(favouriteMovieEntity: FavouriteMovieEntity): Single<Int> {
+    override fun deleteMovieItem(favouriteMovieEntity: Item): Single<Int> {
         return movieDAO.deleteMovieItem(favouriteMovieEntity)
     }
 
@@ -30,15 +31,15 @@ class MovieItemLocalDataSourceImpl(
         return movieDAO.deleteAll()
     }
 
-    override suspend fun getAllMovies(): List<FavouriteMovieEntity> {
+    override suspend fun getAllMovies(): List<Item> {
         return movieDAO.getMovieItems()
     }
 
-    override fun getMovieItems(): Observable<List<FavouriteMovieEntity>> {
+    override fun getMovieItems(): Observable<List<Item>> {
         return movieDAO.getAllMovies()
     }
 
-    override suspend fun updateMovieItem(favouriteMovieEntity: FavouriteMovieEntity) {
+    override suspend fun updateMovieItem(favouriteMovieEntity: Item) {
         //To run this in a background worker thread am using :Dispatchers.IO
         CoroutineScope(Dispatchers.IO).launch {
             movieDAO.updateMovieItem(favouriteMovieEntity)

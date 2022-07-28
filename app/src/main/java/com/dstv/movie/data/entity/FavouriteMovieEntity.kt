@@ -7,18 +7,24 @@ import androidx.room.PrimaryKey
 /**
  * Created by Bennette Molepo on 04/06/2022.
  */
-@Entity(tableName = "movie")
+@Entity(tableName = "movie_v2")
 data class FavouriteMovieEntity (
     @PrimaryKey(autoGenerate = true)
-    var id : Long = 0L,
-    @ColumnInfo(name = "itemCode")
-    var itemCode: String,
-    @ColumnInfo(name = "description")
-    var description: String,
-    @ColumnInfo(name = "image")
-    var image: String,
-    @ColumnInfo(name = "price")
-    var price: Double,
-    @ColumnInfo(name = "quantity")
-    var quantity: Int
+    val id: Int,
+    @ColumnInfo(name = "imageUrl")
+    val imageUrl: String,
+    @ColumnInfo(name = "label")
+    val label: String,
+    @ColumnInfo(name = "rank")
+    val rank: Int,
+    @ColumnInfo(name = "releaseDate")
+    val releaseDate: Int,
+    @ColumnInfo(name = "synopsis")
+    val synopsis: String,
+    @ColumnInfo(name = "title")
+    val title: String,
+    @ColumnInfo(name = "type")
+    val type: String,
+    @ColumnInfo(name = "valueToOrderBy")
+    val valueToOrderBy: String
  )
