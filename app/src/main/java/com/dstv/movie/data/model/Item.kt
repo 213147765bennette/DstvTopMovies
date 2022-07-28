@@ -7,7 +7,7 @@ import java.io.Serializable
 import javax.inject.Inject
 
 @Entity(
-    tableName = "movie"
+    tableName = "movies"
 )
 data class Item(
     @PrimaryKey(autoGenerate = true)
@@ -28,4 +28,4 @@ data class Item(
     val type: String,
     @ColumnInfo(name = "valueToOrderBy")
     val valueToOrderBy: String
-):Serializable
+)

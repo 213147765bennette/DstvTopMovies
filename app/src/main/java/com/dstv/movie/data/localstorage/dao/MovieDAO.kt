@@ -18,13 +18,17 @@ interface MovieDAO {
     @Delete
     fun deleteMovieItem(favouriteMovieEntity: Item): Single<Int>
 
-    @Query("DELETE FROM movie")
+    @Query("DELETE FROM movies")
     suspend fun deleteAll(): Int
 
-    @Query("SELECT * from movie ORDER BY id DESC")
+    @Delete
+    suspend fun deleteMovie(favouriteMovieEntity: Item)
+
+    @Query("SELECT * from movies ORDER BY id DESC")
     fun getAllMovies(): Observable<List<Item>>
 
-    @Query("SELECT * FROM movie")
+
+    @Query("SELECT * FROM movies")
     suspend fun getMovieItems(): List<Item>
 
     @Update

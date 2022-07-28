@@ -1,5 +1,6 @@
 package com.dstv.movie.domain.repository.local
 
+import androidx.room.Delete
 import com.dstv.movie.data.entity.FavouriteMovieEntity
 import com.dstv.movie.data.model.Item
 import com.dstv.movie.data.model.MovieAPIResponse
@@ -12,10 +13,9 @@ import retrofit2.Response
  */
 interface MovieItemsLocalDataRepository {
     fun insertMovieItem(favouriteMovieItem: Item)
-    fun deleteMovieItem(favouriteMovieItem: Item): Single<Int>
+    suspend fun deleteMovie(favouriteMovieItem: Item)
     suspend fun deleteAll():Int
     suspend fun getAllMovies(): List<Item>
-    fun getMovieItems(): Observable<List<Item>>
     suspend fun updateMovieItem(favouriteMovieEntity: Item)
 
 }

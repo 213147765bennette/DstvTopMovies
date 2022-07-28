@@ -16,6 +16,7 @@ import com.dstv.movie.data.model.MovieAPIResponse
 import com.dstv.movie.data.util.Resource
 import com.dstv.movie.domain.repository.local.MovieItemsLocalDataRepository
 import com.dstv.movie.domain.repository.remote.MovieItemsDataRepository
+import com.dstv.movie.presentation.ui.dashboard.DashboardViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -44,6 +45,7 @@ class MoviesViewModel(
     private val compositeDisposable = CompositeDisposable()
 
     //Helpers for removing movie items
+    private  var movieItemEntity: Item? = null
     var loading = MutableLiveData<Boolean>()
     var errorMessage = MutableLiveData<String>()
     private val isLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -76,26 +78,22 @@ class MoviesViewModel(
 
     }
 
+    /**
+     * Launching a new coroutine to insert the data in a non-blocking way
+     */
     //local Storage
     fun saveMovieItem(movieItem: Item) = viewModelScope.launch {
+        Log.d(TAG,"MOVIE_ITEM_SAVED: ${movieItem.title}")
         movieItemsLocalDataRepository.insertMovieItem(movieItem)
     }
 
-    private fun createDeleteMovieItemEntity(): Item{
-        return Item(
-            id = id.value!!,
-            imageUrl = imageUrl.value.toString(),
-            label =  label.value.toString(),
-            rank = rank.value!!,
-            releaseDate = releaseDate.value!!,
-            synopsis = synopsis.value!!,
-            title = title.value!!,
-            type = type.value!!,
-            valueToOrderBy = valueToOrderBy.value!!
-        )
+
+    fun deleteMovieItem(movieItem: Item) = viewModelScope.launch {
+        movieItemsLocalDataRepository.deleteMovie(movieItem)
     }
 
-    fun delete(){
+    //this is when i want to use Reactive java
+   /* fun delete(){
         //call the progressbar first
         isLoading.value = true
 
@@ -122,11 +120,20 @@ class MoviesViewModel(
                     }
                 )
         )
-    }
-
-    fun deleteMovieItem(movieItem: Item) = viewModelScope.launch {
-        movieItemsLocalDataRepository.deleteMovieItem(movieItem)
-    }
+    }*/
+    /* private fun createDeleteMovieItemEntity(): Item{
+          return Item(
+              id = id.value!!,
+              imageUrl = imageUrl.value.toString(),
+              label =  label.value.toString(),
+              rank = rank.value!!,
+              releaseDate = releaseDate.value!!,
+              synopsis = synopsis.value!!,
+              title = title.value!!,
+              type = type.value!!,
+              valueToOrderBy = valueToOrderBy.value!!
+          )
+      }*/
 
 
     //Here i just want to check if i do have the network

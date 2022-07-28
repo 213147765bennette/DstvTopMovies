@@ -3,6 +3,7 @@ package com.dstv.movie.presentation.di.core
 import android.app.Application
 import com.dstv.movie.domain.repository.local.MovieItemsLocalDataRepository
 import com.dstv.movie.domain.repository.remote.MovieItemsDataRepository
+import com.dstv.movie.presentation.ui.dashboard.DashboardViewModelFactory
 import com.dstv.movie.presentation.viewmodel.MoviesViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -27,6 +28,19 @@ class FactoryModule {
           movieItemsLocalDataRepository
       )
   }
+
+
+    @Singleton
+    @Provides
+    fun provideDashboardViewModelFactory(
+        movieItemsLocalDataRepository: MovieItemsLocalDataRepository
+    ):DashboardViewModelFactory{
+        return DashboardViewModelFactory(
+            movieItemsLocalDataRepository
+        )
+    }
+
+
 
 }
 

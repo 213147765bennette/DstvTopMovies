@@ -5,7 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/main_layout"
     tools:context=".presentation.ui.home.HomeFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/myToolbar"
+
+        />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovies"

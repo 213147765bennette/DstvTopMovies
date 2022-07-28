@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.core.Single
  */
 interface MovieItemLocalDataSource {
     fun insertMovieItem(favouriteMovieEntity: Item)
+    suspend fun deleteMovie(favouriteMovieItem: Item)
     fun deleteMovieItem(favouriteMovieEntity: Item): Single<Int>
     suspend fun deleteAll():Int
     suspend fun getAllMovies(): List<Item>
