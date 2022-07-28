@@ -11,10 +11,8 @@ import io.reactivex.rxjava3.core.Single
 interface MovieItemLocalDataSource {
     fun insertMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity)
     suspend fun deleteMovie(favouriteMovieItem: UserFavouriteMovieEntity)
-    fun deleteMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity): Single<Int>
     suspend fun deleteAll():Int
     suspend fun getAllMovies(): List<UserFavouriteMovieEntity>
-    fun getMovieItems(): Observable<List<UserFavouriteMovieEntity>>
     suspend fun updateMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity)
 
 }

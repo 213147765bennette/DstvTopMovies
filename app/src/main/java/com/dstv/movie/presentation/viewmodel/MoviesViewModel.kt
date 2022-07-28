@@ -40,28 +40,13 @@ class MoviesViewModel(
     }
 
     val topFiveMovies: MutableLiveData<Resource<MovieAPIResponse>> = MutableLiveData()
-    val addMovieItem: MutableLiveData<Resource<MovieAPIResponse>> = MutableLiveData()
 
     //using compositeDisposable so that i avoid multiple threads making may calls while others are still active
     private val compositeDisposable = CompositeDisposable()
 
     //Helpers for removing movie items
-    private  var movieItemEntity: Item? = null
     var loading = MutableLiveData<Boolean>()
     var errorMessage = MutableLiveData<String>()
-    private val isLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val isDeleted: MutableLiveData<Boolean> = MutableLiveData()
-    val isError: MutableLiveData<String> = MutableLiveData()
-    val isSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    private val id : MutableLiveData<Int> = MutableLiveData()
-    private val imageUrl : MutableLiveData<String> = MutableLiveData()
-    private val label : MutableLiveData<String> = MutableLiveData()
-    private val rank : MutableLiveData<Int> = MutableLiveData()
-    private val releaseDate : MutableLiveData<Int> = MutableLiveData()
-    private val synopsis : MutableLiveData<String> = MutableLiveData()
-    private val title : MutableLiveData<String> = MutableLiveData()
-    private val type : MutableLiveData<String> = MutableLiveData()
-    private val valueToOrderBy : MutableLiveData<String> = MutableLiveData()
 
     fun getTopFiveMovies() = viewModelScope.launch(Dispatchers.IO) {
         topFiveMovies.postValue(Resource.Loading())
@@ -105,50 +90,6 @@ class MoviesViewModel(
 
         movieItemsLocalDataRepository.deleteMovie(favouriteEntity)
     }
-
-    //this is when i want to use Reactive java
-   /* fun delete(){
-        //call the progressbar first
-        isLoading.value = true
-
-        compositeDisposable.add(
-            movieItemsLocalDataRepository.deleteMovieItem(createDeleteMovieItemEntity())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        Log.d(TAG,"Delete is called: $it")
-                        //kill progressbar here
-                        isLoading.value = false
-
-                        //here call the success respond of delete
-                        isDeleted.value = true
-                    },
-                    {
-                        Log.e(TAG,"onError is called: $it")
-                        isDeleted.value = false
-
-                        //here show the error message
-                        onError(it.message.toString())
-
-                    }
-                )
-        )
-    }*/
-    /* private fun createDeleteMovieItemEntity(): Item{
-          return Item(
-              id = id.value!!,
-              imageUrl = imageUrl.value.toString(),
-              label =  label.value.toString(),
-              rank = rank.value!!,
-              releaseDate = releaseDate.value!!,
-              synopsis = synopsis.value!!,
-              title = title.value!!,
-              type = type.value!!,
-              valueToOrderBy = valueToOrderBy.value!!
-          )
-      }*/
-
 
     //Here i just want to check if i do have the network
     private fun isNetworkAvailable(context: Context?):Boolean{

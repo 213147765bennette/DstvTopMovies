@@ -17,6 +17,7 @@ import com.dstv.movie.MainActivity
 import com.dstv.movie.R
 import com.dstv.movie.data.entity.UserFavouriteMovieEntity
 import com.dstv.movie.data.model.Item
+import com.dstv.movie.data.model.MovieAPIResponse
 import com.dstv.movie.data.util.Resource
 import com.dstv.movie.databinding.FragmentHomeBinding
 import com.dstv.movie.domain.repository.local.MovieItemsLocalDataRepository
@@ -68,7 +69,6 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
             }
         }
 
-
         viewModel= (activity as MainActivity).viewModel
         //movieItemAdapter = (activity as MainActivity).moviesAdapter
         movieItemAdapter = MovieItemAdapter(this)
@@ -83,10 +83,9 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
             layoutManager = LinearLayoutManager(activity)
         }
 
-        //isMovieDeleted.value = false
-        //isMovieAdded.value = false
+        isMovieDeleted.value = false
+        isMovieAdded.value = false
     }
-
 
     private fun viewMoviesList() {
 
@@ -95,10 +94,22 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    response.data?.let {
+                    response.data?.let { it ->
+                        //sort this by rank
+                        val myNormalList: List<Item> = it.components[1].items
+                        val firstSortedList: List<Item> = myNormalList.sortedBy { it.rank }
+
+                        //sort this by release date
+                        val myScndNormalList: List<Item> = it.components[1].items
+                        val scndSortedList: List<Item> = myScndNormalList.sortedBy { it.rank }
+
+                        it.components[1].items.sortedByDescending { it.rank }
                         Log.i(TAG, "came here ${it.components.toList().size}")
                         Log.i(TAG, "======came here======== ${it.components[1].items[1].synopsis}")
-                        movieItemAdapter.differ.submitList(it.components[1].items)
+                        //movieItemAdapter.differ.submitList(it.components[1].items)
+                        movieItemAdapter.differ.submitList(firstSortedList)
+
+
                     }
                 }
                 is Resource.Error -> {
@@ -113,6 +124,10 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
                     showProgressBar()
                 }
 
+                else -> {
+                    Toast.makeText(activity, "Loading...", Toast.LENGTH_LONG)
+                        .show()
+                }
             }
         }
     }
@@ -120,57 +135,54 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
 
     private fun showAddDialog(data: Item){
 
-        val dialog = MaterialDialog (requireContext())
-            .cornerRadius(8f)
-            .cancelable(false)
-            .title(R.string.dialog_add)
-            .message(R.string.dialog_add_title)
+            val dialog = MaterialDialog (requireContext())
+                .cornerRadius(8f)
+                .cancelable(false)
+                .title(R.string.dialog_add)
+                .message(R.string.dialog_add_title)
+
+            dialog.positiveButton(R.string.btn_add) {
+                //Add the Movie Item record to RoomDB
+                //check if this item exist first before adding
+                lifecycleScope.launch {
+                    val cartList:List<UserFavouriteMovieEntity> = movieItemsLocalDataRepository.getAllMovies()
+                    if(cartList.isNotEmpty()){
+                        for (response in cartList){
+                            if (response.id == data.id){
+                                Log.d(TAG,"Response ID: ${response.id}: Data ID: ${data.id}")
+                                viewModel.deleteMovieItem(data)
+                                isMovieDeleted.value = true
+                                isMovieAdded.value = false
+                                Toast.makeText(context,"Movie Item Deleted from favourite.", Toast.LENGTH_LONG).show()
+                                break
+                            }else{
+                                Log.d(TAG,"New Item TO BE ADDED")
+                                viewModel.saveMovieItem(data)
+                                isMovieDeleted.value = false
+                                isMovieAdded.value = true
+                                Toast.makeText(context,"Movie Item added to favourite.", Toast.LENGTH_LONG).show()
+                                break
+                            }
+
+                        }
+                    }else{
+                        Log.d(TAG,"========LIST IS EMPTY, JUST ADD THIS ITEM")
+                        viewModel.saveMovieItem(data)
+                        isMovieDeleted.value = false
+                        isMovieAdded.value = true
+                        Toast.makeText(requireContext(),"Your movie was saved successful", Toast.LENGTH_LONG).show()
+
+                    }
+                }
 
 
-        dialog.positiveButton(R.string.btn_add) {
-            //Add the Movie Item record to RoomDB
-            viewModel.saveMovieItem(data)
-            isMovieAdded.value = true
-            isMovieDeleted.value = false
-            Toast.makeText(requireContext(),"Your data was saved successful", Toast.LENGTH_LONG).show()
+            }
 
-            /*lifecycleScope.launch {
-                Log.d(TAG, "========= ADDING TO ROOM DB==========: ${data.synopsis}")
-                movieItemsLocalDataRepository.insertMovieItem(favouriteEntity)
+            dialog.negativeButton {
+                dialog.dismiss()
+            }
 
-                isMovieAdded.value = true
-                isMovieDeleted.value = false
-                Toast.makeText(requireContext(),"Your data was saved successful", Toast.LENGTH_LONG).show()
-
-            }*/
-
-        }
-
-        dialog.negativeButton {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-
-    }
-
-    //show the deleted dialog
-    private fun showDeleteDialog(data: Item){
-
-        val dialog = MaterialDialog(requireContext())
-            .cornerRadius(8f)
-            .cancelable(false)
-            .title(R.string.dialog_deleted_title)
-            .message(R.string.dialog_deleted_msg)
-
-        dialog.positiveButton {
-            viewModel.deleteMovieItem(data)
-            isMovieDeleted.value = true
-            isMovieAdded.value = false
-            dialog.dismiss()
-        }
-
-        dialog.show()
+            dialog.show()
 
     }
 
@@ -190,8 +202,19 @@ class HomeFragment : Fragment(),  MovieItemAdapter.RecycleViewItemClickInterface
         _binding = null
     }
 
+
     override fun onItemClicked(data: Item, position: Int) {
-        showAddDialog(data)
+        when (isMovieAdded.value) {
+            true -> {
+               viewModel.deleteMovieItem(data)
+            }
+            false -> {
+                showAddDialog(data)
+            }
+            else -> {
+
+            }
+        }
 
     }
 }

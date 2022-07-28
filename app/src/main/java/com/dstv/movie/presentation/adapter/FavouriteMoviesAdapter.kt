@@ -11,16 +11,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dstv.movie.R
 import com.dstv.movie.data.entity.UserFavouriteMovieEntity
-import com.dstv.movie.data.model.Item
 import com.google.gson.Gson
 
 /**
- * created by {Bennette Molepo} on {10/23/2021}.
+ * Created by Bennette Molepo on 27/07/2022.
  */
-class FaouriteMoviesAdapter(var favouritesItems: List<UserFavouriteMovieEntity>):RecyclerView.Adapter<FaouriteMoviesAdapter.FavouriteViewHolder>(){
+class FavouriteMoviesAdapter(var favouritesItems: List<UserFavouriteMovieEntity>):RecyclerView.Adapter<FavouriteMoviesAdapter.FavouriteViewHolder>(){
 
     companion object{
-        private val TAG = "FaouriteMoviesAdapter"
+        private val TAG = "FavouriteMoviesAdapter"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteViewHolder {
@@ -65,14 +64,14 @@ class FaouriteMoviesAdapter(var favouritesItems: List<UserFavouriteMovieEntity>)
     class FavouriteViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
 
         private val txtItemTitle = itemView.findViewById<TextView>(R.id.txt_movie_title)
-        private val txtItemDescription = itemView.findViewById<TextView>(R.id.txt_movie_description)
+        private val txt_movie_releasedate = itemView.findViewById<TextView>(R.id.txt_movie_releasedate)
 
         @SuppressLint("SetTextI18n")
         fun bind(data: UserFavouriteMovieEntity, position: Int){
             Log.d(TAG,"Binding data $data")
 
             txtItemTitle.text = data.title
-            txtItemDescription.text = data.synopsis
+            txt_movie_releasedate.text = "Release Date: "+data.releaseDate.toString()
 
         }
     }

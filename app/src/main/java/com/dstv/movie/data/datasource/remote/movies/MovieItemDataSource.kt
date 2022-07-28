@@ -8,5 +8,4 @@ import retrofit2.Response
  */
 interface MovieItemDataSource {
     suspend fun getMovies(): Response<MovieAPIResponse>
-
 }

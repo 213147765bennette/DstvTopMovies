@@ -1,21 +1,20 @@
 package com.dstv.movie.presentation.ui.dashboard
 
-import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dstv.movie.R
 import com.dstv.movie.data.entity.UserFavouriteMovieEntity
-import com.dstv.movie.data.model.Item
 import com.dstv.movie.databinding.FragmentDashboardBinding
-import com.dstv.movie.presentation.adapter.FaouriteMoviesAdapter
+import com.dstv.movie.presentation.adapter.FavouriteMoviesAdapter
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -36,7 +35,7 @@ class DashboardFragment : Fragment() {
     @Inject
     lateinit var factory: DashboardViewModelFactory
     private lateinit var dashboardViewModel: DashboardViewModel
-    private lateinit var itemAdapter: FaouriteMoviesAdapter
+    private lateinit var itemAdapter: FavouriteMoviesAdapter
     private lateinit var itemList: List<UserFavouriteMovieEntity>
 
     override fun onCreateView(
@@ -70,24 +69,26 @@ class DashboardFragment : Fragment() {
     fun init() {
 
         itemList = ArrayList()
-        itemAdapter = FaouriteMoviesAdapter(itemList)
+        itemAdapter = FavouriteMoviesAdapter(itemList)
 
         _binding?.favouritesRecyclerView?.adapter = itemAdapter
+
+        dashboardViewModel.isDataFound.observe(viewLifecycleOwner){
+            _binding?.favouritesProgressBar?.isVisible = false
+        }
 
         dashboardViewModel.getFavouritesMovies().observe(viewLifecycleOwner) {
             if (it == null || it.equals("null") || it.equals("")) {
                 Toast.makeText(requireContext(), "You have no added favourites movies.", Toast.LENGTH_LONG).show()
             } else {
                 Log.d( TAG,"========= FAVOURITES DATA: ${Gson().toJson(it)}")
-                itemAdapter = FaouriteMoviesAdapter(it)
+                itemAdapter = FavouriteMoviesAdapter(it)
                 itemAdapter.setList(it)
 
                 //inflating the adapter
                 _binding?.favouritesRecyclerView?.apply {
-
-                    layoutManager = LinearLayoutManager(activity)
-
                     adapter = itemAdapter
+                    layoutManager = LinearLayoutManager(activity)
 
                 }
 

@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * Created by Bennette Molepo on 04/06/2022.
+ * Created by Bennette Molepo on 27/07/2022.
  */
 class MovieItemLocalDataSourceImpl(
     private val movieDAO: MovieDAO
@@ -27,15 +27,10 @@ class MovieItemLocalDataSourceImpl(
             movieDAO.insertMovieItem(favouriteMovieEntity)
         }
 
-
     }
 
     override suspend fun deleteMovie(favouriteMovieItem: UserFavouriteMovieEntity) {
         return movieDAO.deleteMovie(favouriteMovieItem)
-    }
-
-    override fun deleteMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity): Single<Int> {
-        return movieDAO.deleteMovieItem(favouriteMovieEntity)
     }
 
     override suspend fun deleteAll(): Int {
@@ -45,10 +40,6 @@ class MovieItemLocalDataSourceImpl(
     override suspend fun getAllMovies(): List<UserFavouriteMovieEntity> {
         Log.d(TAG,"GET_ALL_MOVIE_ITEM_SAVED: ***********")
         return movieDAO.getMovieItems()
-    }
-
-    override fun getMovieItems(): Observable<List<UserFavouriteMovieEntity>> {
-        return movieDAO.getAllMovies()
     }
 
     override suspend fun updateMovieItem(favouriteMovieEntity: UserFavouriteMovieEntity) {

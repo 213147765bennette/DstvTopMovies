@@ -1,18 +1,11 @@
 package com.dstv.movie
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dstv.movie.databinding.ActivityMainBinding
-import com.dstv.movie.presentation.adapter.MovieItemAdapter
-import com.dstv.movie.presentation.ui.dashboard.DashboardFragment
-import com.dstv.movie.presentation.ui.home.HomeFragment
 import com.dstv.movie.presentation.viewmodel.MoviesViewModel
 import com.dstv.movie.presentation.viewmodel.MoviesViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,10 +34,7 @@ class MainActivity : AppCompatActivity() {
         )
         viewModel = ViewModelProvider(this,factory)[MoviesViewModel::class.java]
 
-
     }
-
-
 
     override fun onBackPressed() {
         super.onBackPressed()

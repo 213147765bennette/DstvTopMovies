@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">DstvMovies</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Ranked</string>
     <string name="title_dashboard">Favourites</string>
     <string name="title_notifications">Release Date</string>
 
     <string name="dialog_add">Favourite Movie</string>
-    <string name="btn_add">Add</string>
+    <string name="btn_add">OK</string>
     <string name="dialog_add_title">Add this movie to your favourites?</string>
     <string name="dialog_message">Adding movie data to your favourites list.</string>
     <string name="dialog_add_message">You data was added successfully to favorites.</string>

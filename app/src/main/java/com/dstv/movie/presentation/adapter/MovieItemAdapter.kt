@@ -2,9 +2,8 @@ package com.dstv.movie.presentation.adapter
 
 
 /**
- * created by {Bennette Molepo} on {10/30/2021}.
+ * Created by Bennette Molepo on 27/07/2022.
  */
-
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
@@ -41,8 +40,6 @@ class MovieItemAdapter(var clickListner: RecycleViewItemClickInterface)
             .inflate(LayoutInflater.from(parent.context),parent,false)
         return MoviesViewHolder(binding)
     }
-
-
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = differ.currentList[position]

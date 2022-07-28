@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Created by Bennette Molepo on 04/06/2022.
+ * Created by Bennette Molepo on 27/07/2022.
  */
 @Entity(tableName = "favourites")
 data class UserFavouriteMovieEntity (
